@@ -1,23 +1,13 @@
-/* eslint-disable no-unused-expressions */
-import Vue from 'vue'
-import Router from 'vue-router'
+const routes = [
+  {
+    path: '/',
+    redirect: '/detail'
+  },
+  {
+    path: '/detail',
+    name: 'detail',
+    component: () => import('./pages/Detail')
+  }
+]
 
-Vue.use(Router)
-
-const router = new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      redirect: '/home'
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: () => import('./pages/Home')
-    }
-  ]
-})
-
-export default router
+export default routes

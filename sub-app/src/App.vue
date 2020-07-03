@@ -1,12 +1,6 @@
 <template>
   <div id="app">
-    <div class="frame-wrapper">
-      <!-- 主应用渲染区，用于挂载主应用路由触发的组件 -->
-      <router-view v-show="$route.name" />
-
-      <!-- 子应用渲染区，用于挂载子应用节点 -->
-      <div v-show="!$route.name" id="frame"></div>
-    </div>
+      <router-view />
   </div>
 </template>
 <script>

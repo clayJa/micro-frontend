@@ -1,11 +1,10 @@
 <template>
   <div id="app">
     <div class="frame-wrapper">
-      <!-- 主应用渲染区，用于挂载主应用路由触发的组件 -->
-      <router-view v-show="$route.name" />
+      <router-view />
 
       <!-- 子应用渲染区，用于挂载子应用节点 -->
-      <div v-show="!$route.name" id="frame"></div>
+      <div id="subapp-viewport"></div>
     </div>
   </div>
 </template>
@@ -18,7 +17,6 @@ export default {
     }
   },
   watch: {
-    $route () {}
   },
   computed: {
   },

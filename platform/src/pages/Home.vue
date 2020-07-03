@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <a-button type="primary">点我进入子应用</a-button>
+    <a-button type="primary" @click="push('/vue')">点我进入子应用</a-button>
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default {
   mounted () {
   },
   methods: {
+    push (subapp) { history.pushState(null, subapp, subapp) }
   },
   watch: {
   }

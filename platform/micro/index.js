@@ -6,11 +6,39 @@ import { message } from 'ant-design-vue'
 import {
   registerMicroApps,
   addGlobalUncaughtErrorHandler,
-  start
-} from 'qiankun'
+  start,
+  initGlobalState,
+  MicroAppStateActions
+} from './es'
+/**
+ * 主应用 **可以使用任意技术栈**
+ * 以下分别是 React 和 Vue 的示例，可切换尝试
+ */
+// import render from './render/ReactRender'
+import render from './render/VueRender'
+/**
+ * Step1 初始化应用（可选）
+ */
+// render({ loading: true })
+
+const loader = loading => render({ loading })
 
 // 子应用注册信息
-import apps from './apps'
+const apps = [
+  /**
+   * name: 微应用名称 - 具有唯一性
+   * entry: 微应用入口 - 通过该地址加载微应用
+   * container: 微应用挂载节点 - 微应用加载完成后将挂载在该节点上
+   * activeRule: 微应用触发的路由规则 - 触发路由规则后将加载该微应用
+   */
+  {
+    name: 'VueMicroApp',
+    entry: '//localhost:10200',
+    container: '#subapp-viewport',
+    loader,
+    activeRule: '/vue'
+  }
+]
 
 /**
  * 注册子应用
@@ -31,6 +59,10 @@ registerMicroApps(apps, {
     NProgress.done()
     console.log('after mount', app.name)
     return Promise.resolve()
+  },
+  afterUnmount: app => {
+    console.log('afterUnmount', app)
+    // app.render({ appContent: '', loading: false })
   }
 })
 
