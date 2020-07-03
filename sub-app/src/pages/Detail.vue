@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <a-button type="primary">我是子应用，点我回到主应用</a-button>
+    <a-button type="primary" @click="goMain">我是子应用，点我回到主应用</a-button>
   </div>
 </template>
 
@@ -20,6 +20,9 @@ export default {
   mounted () {
   },
   methods: {
+    goMain () {
+      location.href = location.origin
+    }
   },
   watch: {
   }
