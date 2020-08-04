@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="frame-wrapper">
+      <!-- 主应用渲染区，用于渲染主应用路由 -->
       <router-view />
 
       <!-- 子应用渲染区，用于挂载子应用节点 -->

@@ -2,11 +2,15 @@
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { message } from 'ant-design-vue'
+// 官方通信
+import actions from './shared/actions'
+import subjectActions from './shared/subjectActions'
 // 当前版本 qiankun 对 insertBefore 处理有问题，这里先使用修改后的本地包
 import {
   registerMicroApps,
   addGlobalUncaughtErrorHandler,
   start,
+  prefetchApps,
   initGlobalState,
   MicroAppStateActions
 } from './es'
@@ -23,6 +27,18 @@ import render from './render/VueRender'
 
 const loader = loading => render({ loading })
 
+subjectActions.subscribe(v => { // 在主应用注册呼机监听器，这里可以监听到其他应用的广播
+  console.log(`监听到子应用${v.from}发来消息：`, v)
+})
+const msg = { // 结合下章主应用下发资源给子应用，将pager作为一个模块传入子应用
+  // data: store.getters, // 从主应用仓库读出的数据
+  // components: LibraryUi, // 从主应用读出的组件库
+  // utils: LibraryJs, // 从主应用读出的工具类库
+  // emitFnc: childEmit, // 从主应用下发emit函数来收集子应用反馈
+  subjectActions, // 从主应用下发应用间通信呼机
+  mainActions: actions
+}
+
 // 子应用注册信息
 const apps = [
   /**
@@ -36,7 +52,8 @@ const apps = [
     entry: '//localhost:10200',
     container: '#subapp-viewport',
     loader,
-    activeRule: '/vue'
+    activeRule: '/vue',
+    props: msg
   }
 ]
 
@@ -58,6 +75,11 @@ registerMicroApps(apps, {
     // 加载子应用前，进度条加载完成
     NProgress.done()
     console.log('after mount', app.name)
+    actions.setGlobalState({ token: sessionStorage.token })
+    subjectActions.next({
+      from: 'hhh',
+      token: '但若不见你，阳光也无趣'
+    })
     return Promise.resolve()
   },
   afterUnmount: app => {
@@ -65,6 +87,11 @@ registerMicroApps(apps, {
     // app.render({ appContent: '', loading: false })
   }
 })
+
+prefetchApps([{
+  name: 'VueMicroApp',
+  entry: '//localhost:10200'
+}])
 
 /**
  * 添加全局的未捕获异常处理器

@@ -13,7 +13,10 @@ Vue.use(ant)
 
 Vue.config.productionTip = false
 
-startQiankun() // 启动微前端
+startQiankun({
+  sandbox: { strictStyleIsolation: true },
+  singular: false
+}) // 启动微前端
 new Vue({
   router,
   store,
