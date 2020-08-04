@@ -51,7 +51,7 @@ export async function bootstrap ({ subjectActions, mainActions }) {
   console.log('VueMicroApp bootstraped')
   subjectActions.subscribe(v => { // 在子应用注册呼机监听器，这里可以监听到其他应用的广播
     console.log(`监听到子应用${v.from}发来消息：`, v)
-    store.dispatch('SET_RXJS_STATE')
+    store.commit('globalState/SET_RXJS_STATE')
   })
   Vue.prototype.$subjectActions = subjectActions // 将呼机挂载在vue实例
   actions.setActions(mainActions)
