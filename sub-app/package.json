@@ -12,7 +12,7 @@
     "ant-design-vue": "^1.6.2",
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "nprogress": "^0.2.0",
     "qiankun": "^2.0.15",
     "qs": "^6.7.0",
